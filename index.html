@@ -1,43 +1,5 @@
-<article>
-  <section class="title">
-	<div class="page-type">
-		<h1>Video Player (Simple)</h1>
-			<ul class="title-social">
-				
-				
-				<li>
-					<a class="button-link" href="//github.com/canjs/canjs/edit/master/docs/can-guides/commitment/recipes/video-player/video-player.md">Edit on GitHub</a>
-				</li>
-				
-			</ul>
-	</div>
-	<div class="clear-both"></div>
-	
-  
-	<section class="description">
-    <p>This guide walks you through building custom video controls around a video element.</p>
 
-</section>
-
-  
-	
-</section>
-<section class="on-this-page-table">
-	<!--<h2 class="on-this-page-title" data-skip>Page Content</h2>-->
-<ol><li><a href="#Setup">Setup</a></li><li><a href="#Makeplay_pausebuttonchangeasvideoisplayedandpaused">Make play / pause button change as video is played and paused</a></li><li><a href="#Makeclickingtheplay_pausebuttonplayorpausethevideo">Make clicking the play/pause button play or pause the video</a></li><li><a href="#Showcurrenttimeandduration">Show current time and duration</a></li><li><a href="#Makerangeshowpositionslideratcurrenttime">Make range show position slider at current time</a></li><li><a href="#Makeslidingtherangeupdatethecurrenttime">Make sliding the range update the current time</a></li><li><a href="#Result">Result</a></li></ol></section>
-
-
-
-
-
-
-
-
-
-
-  
-    <section class="body">
-    <p>In this guide, you will learn how to create a custom video player using the <code>&lt;video&gt;</code> element and <a href="http://canjs.com">CanJS</a>. The
+<p>In this guide, you will learn how to create a custom video player using the <code>&lt;video&gt;</code> element and <a href="http://canjs.com">CanJS</a>. The
 custom video player will:</p>
 <ul>
 <li>Have custom play and pause buttons.</li>
@@ -69,7 +31,7 @@ custom video player will:</p>
 <li><p>Create a custom <code>&lt;video-player&gt;</code> element that takes a <code>src</code> attribute and creates a <code>&lt;video&gt;</code> element
 within itself. We should be able to create the video like:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>video-player</span> <span class="token attr-name"><span class="token namespace">src:</span>raw</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://bit.ly/can-tom-n-jerry<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>video-player</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div></li>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>video-player</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div></li>
 <li><p>The embedded <code>&lt;video&gt;</code> element should have the native controls enabled.</p></li>
 </ul>
 <p>When complete, the result will look exactly the same as the player when you started.  The
@@ -82,16 +44,16 @@ use the custom element in your page’s <code>HTML</code>.</p>
 that matches the name of your custom element.  For example:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">Component<span class="token punctuation">.</span><span class="token function">extend</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
   tag<span class="token punctuation">:</span> <span class="token string">"video-player"</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
 <p>Then you can use this tag in your HTML page:</p>
-<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>video-player</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>video-player</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div>
+<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>video-player</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>video-player</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <p>But this doesn’t do anything ... yet.  Components add their own HTML through their <a href="../../can-component.prototype.view.html" title="Provides a view to render directly within the component’s element. The view is rendered with the
 component’s can-component::ViewModel instance.  <content/> elements within the view are replaced by the source elements within the component’s tag.">view</a>
 property:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">Component<span class="token punctuation">.</span><span class="token function">extend</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
   tag<span class="token punctuation">:</span> <span class="token string">"video-player"</span><span class="token punctuation">,</span>
   view<span class="token punctuation">:</span> <span class="token template-string"><span class="token string">`&lt;h2&gt;I am a player!&lt;/h2&gt;`</span></span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>A component’s <a href="../../can-component.prototype.view.html" title="Provides a view to render directly within the component’s element. The view is rendered with the
 component’s can-component::ViewModel instance.  <content/> elements within the view are replaced by the source elements within the component’s tag.">view</a> is rendered with its <a href="../../can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
 to the component’s view. The constructor function
@@ -107,13 +69,13 @@ component’s can-component::ViewModel instance.  <content/> elements within the
   ViewModel<span class="token punctuation">:</span> <span class="token punctuation">{</span>
     src<span class="token punctuation">:</span> <span class="token punctuation">{</span>type<span class="token punctuation">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span> <span class="token keyword">default</span><span class="token punctuation">:</span> <span class="token string">"http://bit.ly/can-tom-n-jerry"</span><span class="token punctuation">}</span>
   <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>But we want the <code>&lt;video-player&gt;</code> to take a <code>src</code> attribute value itself and use that for the
 <code>&lt;source&gt;</code>’s <code>src</code>. For example, if
 we wanted the video to play <code>"http://dl3.webmfiles.org/big-buck-bunny_trailer.webm"</code> instead of <code>"http://bit.ly/can-tom-n-jerry"</code>, we would:</p>
 <ol>
 <li>Update <code>&lt;video-player&gt;</code> to pass <code>"http://dl3.webmfiles.org/big-buck-bunny_trailer.webm"</code> with <a href="../../can-stache-bindings.raw.html" title="One-way bind a string value to the ViewModel or element.">toChild:raw</a>:
-<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>video-player</span> <span class="token attr-name"><span class="token namespace">src:</span>raw</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://dl3.webmfiles.org/big-buck-bunny_trailer.webm<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div></li>
+<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>video-player</span> <span class="token attr-name"><span class="token namespace">src:</span>raw</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://dl3.webmfiles.org/big-buck-bunny_trailer.webm<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div></li>
 <li>Update the <a href="../../can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
 to the component’s view. The constructor function
 is initialized with values specified by the component element’s data bindings.">ViewModel</a> to define a <code>src</code> property like:
@@ -127,12 +89,12 @@ is initialized with values specified by the component element’s data bindings.
   ViewModel<span class="token punctuation">:</span> <span class="token punctuation">{</span>
     src<span class="token punctuation">:</span> <span class="token string">"string"</span>
   <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code><div aria-hidden="true" data-range="5" class=" line-highlight" style="top: 96px; height: 24px;"></div></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code><div aria-hidden="true" data-range="5" class=" line-highlight" style="top: 96px; height: 24px;"></div></pre></div>
 <div line-highlight="5"></div></li>
 </ol>
 <p>Finally, to have a <code>&lt;video&gt;</code> element show the <em>native</em> controls, add a <code>controls</code>
 attribute like:</p>
-<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>video</span> <span class="token attr-name">controls</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div>
+<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>video</span> <span class="token attr-name">controls</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <h3>The solution</h3>
 <p>Update the <strong>JS</strong> tab to:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-js" data-line="3-13"><code class=" language-js"><span class="token keyword">import</span> <span class="token punctuation">{</span>Component<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"//unpkg.com/can@5/core.mjs"</span><span class="token punctuation">;</span>
@@ -148,11 +110,11 @@ Component<span class="token punctuation">.</span><span class="token function">ex
     src<span class="token punctuation">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code><div aria-hidden="true" data-range="3-13" class=" line-highlight" style="top: 48px; height: 264px;"></div></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code><div aria-hidden="true" data-range="3-13" class=" line-highlight" style="top: 48px; height: 264px;"></div></pre></div>
 <div line-highlight="3-13"></div>
 <p>Update the <strong>HTML</strong> to:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-html" data-line="1"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>video-player</span> <span class="token attr-name"><span class="token namespace">src:</span>raw</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://bit.ly/can-tom-n-jerry<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>video-player</span><span class="token punctuation">&gt;</span></span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code><div aria-hidden="true" data-range="1" class=" line-highlight" style="top: 0px; height: 24px;"></div></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div>
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code><div aria-hidden="true" data-range="1" class=" line-highlight" style="top: 0px; height: 24px;"></div></pre></div>
 <div line-highlight="1"></div>
 <h2 id="Makeplay_pausebuttonchangeasvideoisplayedandpaused">Make play / pause button change as video is played and paused</h2>
 <h3>The problem</h3>
@@ -164,11 +126,11 @@ When the video is paused, the button should say <em>“Play”</em>.</p>
 <div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>video</span><span class="token punctuation">&gt;</span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span><span class="token punctuation">&gt;</span></span>Play<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div>
 <h3>What you need to know</h3>
 <ul>
 <li><p>To change the HTML content of the page, use <a href="../../can-stache.helpers.if.html" title="can-stache.helpers.if">{{#if(expression)}}</a> and <a href="../../can-stache.helpers.else.html" title="">{{else}}</a> like:</p>
-<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span><span class="token punctuation">&gt;</span></span>{{#if(playing)}} Pause {{else}} Play {{/if}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div></li>
+<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span><span class="token punctuation">&gt;</span></span>{{#if(playing)}} Pause {{else}} Play {{/if}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div></li>
 <li><p>The <a href="../../can-component.prototype.view.html" title="Provides a view to render directly within the component’s element. The view is rendered with the
 component’s can-component::ViewModel instance.  <content/> elements within the view are replaced by the source elements within the component’s tag.">view</a> responds to values in the <a href="../../can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
 to the component’s view. The constructor function
@@ -178,7 +140,7 @@ is initialized with values specified by the component element’s data bindings.
 <div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">ViewModel<span class="token punctuation">:</span> <span class="token punctuation">{</span>
   <span class="token comment">// ...</span>
   playing<span class="token punctuation">:</span> <span class="token string">"boolean"</span><span class="token punctuation">,</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div></li>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div></li>
 <li><p>Methods can be used to change the <a href="../../can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
 to the component’s view. The constructor function
 is initialized with values specified by the component element’s data bindings.">ViewModel</a>.  The following might create methods that change the <code>playing</code> value:</p>
@@ -190,10 +152,10 @@ is initialized with values specified by the component element’s data bindings.
   <span class="token function">pause</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">this</span><span class="token punctuation">.</span>playing <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div></li>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></li>
 <li><p>You can listen to events on the DOM with <a href="../../can-stache-bindings.event.html" title="Respond to events on elements or component ViewModels.">on:event</a>.  For example, the following might
 listen to a click on a <code>&lt;div&gt;</code> and call <code>doSomething()</code>:</p>
-<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name"><span class="token namespace">on:</span>click</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>doSomething()<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div>
+<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name"><span class="token namespace">on:</span>click</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>doSomething()<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <p><code>&lt;video&gt;</code> elements have a variety of useful <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement">events</a>, including <a href="https://developer.mozilla.org/en-US/docs/Web/Events/play">play</a> and
 <a href="https://developer.mozilla.org/en-US/docs/Web/Events/pause">pause</a> events that are emitted when the video is played or paused.</p></li>
 </ul>
@@ -227,7 +189,7 @@ Component<span class="token punctuation">.</span><span class="token function">ex
     <span class="token punctuation">}</span><span class="token punctuation">,</span>
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code><div aria-hidden="true" data-range="7-8" class=" line-highlight" style="top: 144px; height: 48px;"></div><div aria-hidden="true" data-range="11-15" class=" line-highlight" style="top: 240px; height: 120px;"></div><div aria-hidden="true" data-range="19" class=" line-highlight" style="top: 432px; height: 24px;"></div><div aria-hidden="true" data-range="21-25" class=" line-highlight" style="top: 480px; height: 120px;"></div></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code><div aria-hidden="true" data-range="7-8" class=" line-highlight" style="top: 144px; height: 48px;"></div><div aria-hidden="true" data-range="11-15" class=" line-highlight" style="top: 240px; height: 120px;"></div><div aria-hidden="true" data-range="19" class=" line-highlight" style="top: 432px; height: 24px;"></div><div aria-hidden="true" data-range="21-25" class=" line-highlight" style="top: 480px; height: 120px;"></div></pre></div>
 <div line-highlight="7-8,11-15,19,21-25"></div>
 <h2 id="Makeclickingtheplay_pausebuttonplayorpausethevideo">Make clicking the play/pause button play or pause the video</h2>
 <h3>The problem</h3>
@@ -250,11 +212,11 @@ is initialized with values specified by the component element’s data bindings.
   <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
     videoElement<span class="token punctuation">.</span><span class="token function">pause</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
   <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>We update the state like:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js"><span class="token function">togglePlay</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
   <span class="token keyword">this</span><span class="token punctuation">.</span>playing <span class="token operator">=</span> <span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>playing<span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
 <p>And listen to when <code>playing</code> changes and update the <code>video</code> element like:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">viewModel<span class="token punctuation">.</span><span class="token function">listenTo</span><span class="token punctuation">(</span><span class="token string">"playing"</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>event<span class="token punctuation">,</span> isPlaying<span class="token punctuation">)</span> <span class="token punctuation">{</span>
   <span class="token keyword">if</span> <span class="token punctuation">(</span> isPlaying <span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -262,7 +224,7 @@ is initialized with values specified by the component element’s data bindings.
   <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
     videoElement<span class="token punctuation">.</span><span class="token function">pause</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
   <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>This means that you need to:</p>
 <ol>
 <li>Listen to when the <code>&lt;button&gt;</code> is clicked and call a ViewModel method that updates the <code>playing</code> state.</li>
@@ -277,7 +239,7 @@ like this:</p>
   <span class="token function">connectedCallback</span><span class="token punctuation">(</span>element<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">// perform mischief</span>
   <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p><code>connectedCallback</code> gets called once the component’s <code>element</code> is in the page. You can use
 <a href="../../can-event-queue/map/map.listenTo.html" title="Listen to an event and register the binding for simplified unbinding.">listenTo</a> to listen to changes in the <a href="../../can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
 to the component’s view. The constructor function
@@ -290,9 +252,9 @@ perform side-effects. The following listens to when <code>playing</code> changes
 
     <span class="token punctuation">}</span><span class="token punctuation">)</span>
   <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>Use <code>querySelector</code> to get the <code>&lt;video&gt;</code> element from the <code>&lt;video-player&gt;</code> like:</p>
-<div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">element<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">"video"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div>
+<div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">element<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">"video"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <p><code>&lt;video&gt;</code> elements have a <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play">.play()</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/pause">.pause()</a> methods that can start and stop a video.</p>
 <h3>The solution</h3>
 <p>Update the <strong>JavaScript</strong> tab to:</p>
@@ -337,7 +299,7 @@ Component<span class="token punctuation">.</span><span class="token function">ex
     <span class="token punctuation">}</span>
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code><div aria-hidden="true" data-range="12" class=" line-highlight" style="top: 264px; height: 24px;"></div><div aria-hidden="true" data-range="27-30" class=" line-highlight" style="top: 624px; height: 96px;"></div><div aria-hidden="true" data-range="31-39" class=" line-highlight" style="top: 720px; height: 216px;"></div></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code><div aria-hidden="true" data-range="12" class=" line-highlight" style="top: 264px; height: 24px;"></div><div aria-hidden="true" data-range="27-30" class=" line-highlight" style="top: 624px; height: 96px;"></div><div aria-hidden="true" data-range="31-39" class=" line-highlight" style="top: 720px; height: 216px;"></div></pre></div>
 <div line-highlight="12,27-30,31-39"></div>
 <h2 id="Showcurrenttimeandduration">Show current time and duration</h2>
 <h3>The problem</h3>
@@ -345,18 +307,18 @@ Component<span class="token punctuation">.</span><span class="token function">ex
 formatted like: <code>mm:SS</code>. They should be presented within two spans like:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js"><span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">&gt;</span>
 <span class="token operator">&lt;</span>span<span class="token operator">&gt;</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">22</span><span class="token operator">&lt;</span><span class="token operator">/</span>span<span class="token operator">&gt;</span>
-<span class="token operator">&lt;</span>span<span class="token operator">&gt;</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token number">45</span><span class="token operator">&lt;</span><span class="token operator">/</span>span<span class="token operator">&gt;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div>
+<span class="token operator">&lt;</span>span<span class="token operator">&gt;</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token number">45</span><span class="token operator">&lt;</span><span class="token operator">/</span>span<span class="token operator">&gt;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
 <h3>What you need to know</h3>
 <ol>
 <li><p>Methods can be used to format values in <a href="../../can-stache.html" title="Live binding Mustache and Handlebars-compatible templates.">can-stache</a>. For example, you can uppercase values like  this:</p>
-<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">&gt;</span></span>{{upper(value)}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div>
+<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">&gt;</span></span>{{upper(value)}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <p>With a method like:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">ViewModel<span class="token punctuation">:</span> <span class="token punctuation">{</span>
   <span class="token comment">// ...</span>
   <span class="token function">upper</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">return</span> value<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toUpperCase</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>The following can be used to format time:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js"><span class="token function">formatTime</span><span class="token punctuation">(</span>time<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>time <span class="token operator">===</span> <span class="token keyword">null</span> <span class="token operator">||</span> time <span class="token operator">===</span> undefined<span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -368,7 +330,7 @@ formatted like: <code>mm:SS</code>. They should be presented within two spans li
       seconds <span class="token operator">=</span> <span class="token string">"0"</span> <span class="token operator">+</span> seconds<span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
     <span class="token keyword">return</span> minutes <span class="token operator">+</span> <span class="token string">":"</span> <span class="token operator">+</span> seconds<span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div></li>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></li>
 <li><p>Time is given as a number. Use the following to create a number property on
 the <a href="../../can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
 to the component’s view. The constructor function
@@ -377,7 +339,7 @@ is initialized with values specified by the component element’s data bindings.
   <span class="token comment">// ...</span>
   duration<span class="token punctuation">:</span> <span class="token string">"number"</span><span class="token punctuation">,</span>
   currentTime<span class="token punctuation">:</span> <span class="token string">"number"</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div></li>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></li>
 <li><p><code>&lt;video&gt;</code> elements emit a <a href="https://developer.mozilla.org/en-US/docs/Web/Events/loadedmetadata">loadmetadata event</a> when they know how long
 the video is. They also emit a <a href="https://developer.mozilla.org/en-US/docs/Web/Events/timeupdate">timeupdate event</a> when the video’s current play position
 changes.</p>
@@ -386,7 +348,7 @@ changes.</p>
 <li><code>videoElement.currentTime</code> reads the current play position of a video.</li>
 </ul></li>
 <li><p>You can get the element in an stache <code>on:event</code> binding with <a href="../../can-stache/keys/scope.html#scope_element" title="The template context">scope.element</a> like:</p>
-<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>video</span> <span class="token attr-name"><span class="token namespace">on:</span>timeupdate</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>updateTimes(scope.element)<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div></li>
+<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>video</span> <span class="token attr-name"><span class="token namespace">on:</span>timeupdate</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>updateTimes(scope.element)<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div></li>
 </ol>
 <h3>The solution</h3>
 <p>Update the <strong>JavaScript</strong> tab to:</p>
@@ -452,7 +414,7 @@ Component<span class="token punctuation">.</span><span class="token function">ex
     <span class="token punctuation">}</span>
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code><div aria-hidden="true" data-range="9" class=" line-highlight" style="top: 192px; height: 24px;"></div><div aria-hidden="true" data-range="10" class=" line-highlight" style="top: 216px; height: 24px;"></div><div aria-hidden="true" data-range="17" class=" line-highlight" style="top: 384px; height: 24px;"></div><div aria-hidden="true" data-range="18" class=" line-highlight" style="top: 408px; height: 24px;"></div><div aria-hidden="true" data-range="24-41" class=" line-highlight" style="top: 552px; height: 432px;"></div></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code><div aria-hidden="true" data-range="9" class=" line-highlight" style="top: 192px; height: 24px;"></div><div aria-hidden="true" data-range="10" class=" line-highlight" style="top: 216px; height: 24px;"></div><div aria-hidden="true" data-range="17" class=" line-highlight" style="top: 384px; height: 24px;"></div><div aria-hidden="true" data-range="18" class=" line-highlight" style="top: 408px; height: 24px;"></div><div aria-hidden="true" data-range="24-41" class=" line-highlight" style="top: 552px; height: 432px;"></div></pre></div>
 <div line-highlight="9,10,17,18,24-41"></div>
 <h2 id="Makerangeshowpositionslideratcurrenttime">Make range show position slider at current time</h2>
 <h3>The problem</h3>
@@ -462,13 +424,13 @@ the video playing position changes.</p>
 <code>currentTime</code> span like:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-html" data-line="2"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>range<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">&gt;</span></span>{{formatTime(currentTime)}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span> /<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code><div aria-hidden="true" data-range="2" class=" line-highlight" style="top: 24px; height: 24px;"></div></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">&gt;</span></span>{{formatTime(currentTime)}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span> /<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code><div aria-hidden="true" data-range="2" class=" line-highlight" style="top: 24px; height: 24px;"></div></pre></div>
 <div line-highlight="2"></div>
 <h3>What you need to know</h3>
 <ul>
 <li><p>The range input can have an initial value, max value, and step size
 specified like:</p>
-<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>range<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>1<span class="token punctuation">"</span></span> <span class="token attr-name">step</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>any<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div></li>
+<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>range<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>1<span class="token punctuation">"</span></span> <span class="token attr-name">step</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>any<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div></li>
 <li><p>The range will have values from 0 to 1.  We will need to translate the currentTime to
 a number between 0 and 1. We can do this with a <a href="../../can-define.types.get.html" title="Specify what happens when a certain property is read on a map. get functions
 work like a can-compute and automatically update themselves when a dependent
@@ -478,11 +440,11 @@ observable value is changed.">computed getter property</a> like:</p>
   <span class="token keyword">get</span> <span class="token function">percentComplete</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>currentTime <span class="token operator">/</span> <span class="token keyword">this</span><span class="token punctuation">.</span>duration<span class="token punctuation">;</span>
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div></li>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></li>
 <li><p>Use <a href="../../can-stache-bindings.toChild.html" title="One-way bind a value in the parent scope to the ViewModel or element.">toChild:from</a> to update a value from a <a href="../../can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
 to the component’s view. The constructor function
 is initialized with values specified by the component element’s data bindings.">ViewModel</a> property like:</p>
-<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name"><span class="token namespace">value:</span>from</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>percentComplete<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div></li>
+<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name"><span class="token namespace">value:</span>from</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>percentComplete<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div></li>
 </ul>
 <h3>The solution</h3>
 <p>Update the <strong>JavaScript</strong> tab to:</p>
@@ -554,7 +516,7 @@ Component<span class="token punctuation">.</span><span class="token function">ex
     <span class="token punctuation">}</span>
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code><div aria-hidden="true" data-range="17-18" class=" line-highlight" style="top: 384px; height: 48px;"></div><div aria-hidden="true" data-range="29-31" class=" line-highlight" style="top: 672px; height: 72px;"></div></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code><div aria-hidden="true" data-range="17-18" class=" line-highlight" style="top: 384px; height: 48px;"></div><div aria-hidden="true" data-range="29-31" class=" line-highlight" style="top: 672px; height: 72px;"></div></pre></div>
 <div line-highlight="17-18,29-31"></div>
 <h2 id="Makeslidingtherangeupdatethecurrenttime">Make sliding the range update the current time</h2>
 <h3>The problem</h3>
@@ -578,11 +540,11 @@ values. We can do this by creating a <code>percentComplete</code> <a href="../..
     <span class="token keyword">this</span><span class="token punctuation">.</span>currentTime <span class="token operator">=</span> newVal <span class="token operator">*</span> <span class="token keyword">this</span><span class="token punctuation">.</span>duration<span class="token punctuation">;</span>
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
   <span class="token comment">// ...</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 <p>Use <a href="../../can-stache-bindings.twoWay.html" title="Two-way bind a value in the viewModel or the element to the parent scope.">twoWay:bind</a> to two-way bind a value to a <a href="../../can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
 to the component’s view. The constructor function
 is initialized with values specified by the component element’s data bindings.">ViewModel</a> property:</p>
-<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name"><span class="token namespace">value:</span>bind</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>someViewModelProperty<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div>
+<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name"><span class="token namespace">value:</span>bind</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>someViewModelProperty<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div>
 <h3>The solution</h3>
 <p>Update the <strong>JavaScript</strong> tab to:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-js" data-line="6,18,32-34,69-74"><code class=" language-js"><span class="token keyword">import</span> <span class="token punctuation">{</span>Component<span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"//unpkg.com/can@5/core.mjs"</span><span class="token punctuation">;</span>
@@ -662,19 +624,13 @@ Component<span class="token punctuation">.</span><span class="token function">ex
     <span class="token punctuation">}</span>
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code><div aria-hidden="true" data-range="6" class=" line-highlight" style="top: 120px; height: 24px;"></div><div aria-hidden="true" data-range="18" class=" line-highlight" style="top: 408px; height: 24px;"></div><div aria-hidden="true" data-range="32-34" class=" line-highlight" style="top: 744px; height: 72px;"></div><div aria-hidden="true" data-range="69-74" class=" line-highlight" style="top: 1632px; height: 144px;"></div></pre><div class="toolbar"><div class="toolbar-item"><a>Copy</a></div></div></div>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code><div aria-hidden="true" data-range="6" class=" line-highlight" style="top: 120px; height: 24px;"></div><div aria-hidden="true" data-range="18" class=" line-highlight" style="top: 408px; height: 24px;"></div><div aria-hidden="true" data-range="32-34" class=" line-highlight" style="top: 744px; height: 72px;"></div><div aria-hidden="true" data-range="69-74" class=" line-highlight" style="top: 1632px; height: 144px;"></div></pre></div>
 <div line-highlight="6,18,32-34,69-74"></div>
 <h2 id="Result">Result</h2>
 <p>When finished, you should see something like the following JS Bin:</p>
 <div class="cp_embed_wrapper"><iframe id="cp_embed_qyRqMx" src="//codepen.io/justinbmeyer/embed/qyRqMx?height=360&amp;theme-id=dark&amp;slug-hash=qyRqMx&amp;default-tab=js%2Cresult&amp;user=justinbmeyer&amp;embed-version=2&amp;pen-title=CanJS%205.0%20Video%20Player%20-%20Final" scrolling="no" frameborder="0" height="360" allowtransparency="true" allowfullscreen="true" allowpaymentrequest="true" name="CodePen Embed" title="CanJS 5.0 Video Player - Final" class="cp_embed_iframe " style="width: 100%; overflow: hidden;"></iframe></div>
 <script async="" src="https://static.codepen.io/assets/embed/ei.js"></script>
 
-</section>
-
-  
 
 
-<script type="text/javascript">
-  window.docObject = {"src":{"path":"docs/can-guides/commitment/recipes/video-player/video-player.md"},"description":"This guide walks you through building custom video controls around a video element.\n\n\n","name":"guides/recipes/video-player","title":"Video Player (Simple)","type":"page","parent":"guides/recipes","comment":" ","pathToRoot":"../../.."};
-</script>
-</article>
+
