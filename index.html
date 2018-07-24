@@ -84,15 +84,6 @@
 	opacity: .7;
 }
 
-@media screen and (max-width: 767px) {
-	pre[class*="language-"]:before,
-	pre[class*="language-"]:after {
-		bottom: 14px;
-		box-shadow: none;
-	}
-
-}
-
 /* Plugin styles */
 .token.tab:not(:empty):before,
 .token.cr:before,
@@ -106,6 +97,8 @@ code strong {
     font-weight: normal;
 }
 </style>
+
+<h1>Create Custom Video Player Controls with CanJS</h1>
 
     <p>In this guide, you will learn how to create a custom video player using the <code>&lt;video&gt;</code> element and <a href="http://canjs.com">CanJS</a>. The
 custom video player will:</p>
@@ -549,7 +542,7 @@ observable value is changed.">computed getter property</a> like:</p>
     <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>currentTime <span class="token operator">/</span> <span class="token keyword">this</span><span class="token punctuation">.</span>duration<span class="token punctuation">;</span>
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
 <span class="token punctuation">}</span></code></pre></div></li>
-<li><p>Use <a href="https://canjs.com/doc/can-stache-bindings.toChild.html" title="One-way bind a value in the parent scope to the ViewModel or element.">toChild:from</a> to update a value from a <a href="https://canjs.com/doc/can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
+<li><p>Use <a href="https://canjs.com/doc/can-stache-bindings.toChild.html" title="One-way bind a value in the parent scope to the ViewModel or element.">key:from</a> to update a value from a <a href="https://canjs.com/doc/can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
 to the component’s view. The constructor function
 is initialized with values specified by the component element’s data bindings.">ViewModel</a> property like:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name"><span class="token namespace">value:</span>from</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>percentComplete<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span></code></pre></div></li>
@@ -649,7 +642,7 @@ values. We can do this by creating a <code>percentComplete</code> <a href="https
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
   <span class="token comment">// ...</span>
 <span class="token punctuation">}</span></code></pre></div>
-<p>Use <a href="https://canjs.com/doc/can-stache-bindings.twoWay.html" title="Two-way bind a value in the viewModel or the element to the parent scope.">twoWay:bind</a> to two-way bind a value to a <a href="https://canjs.com/doc/can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
+<p>Use <a href="https://canjs.com/doc/can-stache-bindings.twoWay.html" title="Two-way bind a value in the viewModel or the element to the parent scope.">key:bind</a> to two-way bind a value to a <a href="https://canjs.com/doc/can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
 to the component’s view. The constructor function
 is initialized with values specified by the component element’s data bindings.">ViewModel</a> property:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name"><span class="token namespace">value:</span>bind</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>someViewModelProperty<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span></code></pre></div>
