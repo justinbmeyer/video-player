@@ -131,7 +131,7 @@ custom video player will:</p>
 <p>This CodePen:</p>
 <ul>
 <li>Creates a <code>&lt;video&gt;</code> element that loads a video. <em>Right click and select “Show controls” to see the video’s controls</em>.</li>
-<li>Loads CanJS's custom element library: <a href="../../can-component.html" title="Create a custom element that can be used to manage widgets or application logic.">Component</a>.</li>
+<li>Loads CanJS's custom element library: <a href="https://canjs.com/doc/can-component.html" title="Create a custom element that can be used to manage widgets or application logic.">Component</a>.</li>
 </ul>
 <h3>The problem</h3>
 <p>In this section, we will:</p>
@@ -148,24 +148,24 @@ tab instead of the native <code>&lt;video&gt;</code> element.</p>
 <h3>What you need to know</h3>
 <p>To set up a basic CanJS application (or widget), you define a custom element in JavaScript and
 use the custom element in your page’s <code>HTML</code>.</p>
-<p>To define a custom element, extend <a href="../../can-component.html" title="Create a custom element that can be used to manage widgets or application logic.">Component</a> with a <a href="../../can-component.prototype.tag.html" title="Specifies the HTML tag (or node-name) the can-component will be created on.">tag</a>
+<p>To define a custom element, extend <a href="https://canjs.com/doc/can-component.html" title="Create a custom element that can be used to manage widgets or application logic.">Component</a> with a <a href="https://canjs.com/doc/can-component.prototype.tag.html" title="Specifies the HTML tag (or node-name) the can-component will be created on.">tag</a>
 that matches the name of your custom element.  For example:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">Component<span class="token punctuation">.</span><span class="token function">extend</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
   tag<span class="token punctuation">:</span> <span class="token string">"video-player"</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre></div>
 <p>Then you can use this tag in your HTML page:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>video-player</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>video-player</span><span class="token punctuation">&gt;</span></span></code></pre></div>
-<p>But this doesn’t do anything ... yet.  Components add their own HTML through their <a href="../../can-component.prototype.view.html" title="Provides a view to render directly within the component’s element. The view is rendered with the
+<p>But this doesn’t do anything ... yet.  Components add their own HTML through their <a href="https://canjs.com/doc/can-component.prototype.view.html" title="Provides a view to render directly within the component’s element. The view is rendered with the
 component’s can-component::ViewModel instance.  <content/> elements within the view are replaced by the source elements within the component’s tag.">view</a>
 property:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">Component<span class="token punctuation">.</span><span class="token function">extend</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
   tag<span class="token punctuation">:</span> <span class="token string">"video-player"</span><span class="token punctuation">,</span>
   view<span class="token punctuation">:</span> <span class="token template-string"><span class="token string">`&lt;h2&gt;I am a player!&lt;/h2&gt;`</span></span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
-<p>A component’s <a href="../../can-component.prototype.view.html" title="Provides a view to render directly within the component’s element. The view is rendered with the
-component’s can-component::ViewModel instance.  <content/> elements within the view are replaced by the source elements within the component’s tag.">view</a> is rendered with its <a href="../../can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
+<p>A component’s <a href="https://canjs.com/doc/can-component.prototype.view.html" title="Provides a view to render directly within the component’s element. The view is rendered with the
+component’s can-component::ViewModel instance.  <content/> elements within the view are replaced by the source elements within the component’s tag.">view</a> is rendered with its <a href="https://canjs.com/doc/can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
 to the component’s view. The constructor function
-is initialized with values specified by the component element’s data bindings.">ViewModel</a>. For example, we can make a <code>&lt;video&gt;</code> display <code>"http://bit.ly/can-tom-n-jerry"</code> by defining a <code>src</code> property on the <code>ViewModel</code> and using it in the <a href="../../can-component.prototype.view.html" title="Provides a view to render directly within the component’s element. The view is rendered with the
+is initialized with values specified by the component element’s data bindings.">ViewModel</a>. For example, we can make a <code>&lt;video&gt;</code> display <code>"http://bit.ly/can-tom-n-jerry"</code> by defining a <code>src</code> property on the <code>ViewModel</code> and using it in the <a href="https://canjs.com/doc/can-component.prototype.view.html" title="Provides a view to render directly within the component’s element. The view is rendered with the
 component’s can-component::ViewModel instance.  <content/> elements within the view are replaced by the source elements within the component’s tag.">view</a> like:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">Component<span class="token punctuation">.</span><span class="token function">extend</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
   tag<span class="token punctuation">:</span> <span class="token string">"video-player"</span><span class="token punctuation">,</span>
@@ -182,9 +182,9 @@ component’s can-component::ViewModel instance.  <content/> elements within the
 <code>&lt;source&gt;</code>’s <code>src</code>. For example, if
 we wanted the video to play <code>"http://dl3.webmfiles.org/big-buck-bunny_trailer.webm"</code> instead of <code>"http://bit.ly/can-tom-n-jerry"</code>, we would:</p>
 <ol>
-<li>Update <code>&lt;video-player&gt;</code> to pass <code>"http://dl3.webmfiles.org/big-buck-bunny_trailer.webm"</code> with <a href="../../can-stache-bindings.raw.html" title="One-way bind a string value to the ViewModel or element.">toChild:raw</a>:
+<li>Update <code>&lt;video-player&gt;</code> to pass <code>"http://dl3.webmfiles.org/big-buck-bunny_trailer.webm"</code> with <a href="https://canjs.com/doc/can-stache-bindings.raw.html" title="One-way bind a string value to the ViewModel or element.">toChild:raw</a>:
 <div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>video-player</span> <span class="token attr-name"><span class="token namespace">src:</span>raw</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://dl3.webmfiles.org/big-buck-bunny_trailer.webm<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span></code></pre></div></li>
-<li>Update the <a href="../../can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
+<li>Update the <a href="https://canjs.com/doc/can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
 to the component’s view. The constructor function
 is initialized with values specified by the component element’s data bindings.">ViewModel</a> to define a <code>src</code> property like:
 <div class="code-toolbar"><pre class=" line-numbers language-js" data-line="5"><code class=" language-js">Component<span class="token punctuation">.</span><span class="token function">extend</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
@@ -221,8 +221,8 @@ attribute like:</p>
 </code></pre></div>
 <div line-highlight="3-13"></div>
 <p>Update the <strong>HTML</strong> to:</p>
-<div class="code-toolbar"><pre class=" line-numbers language-html" data-line="1"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>video-player</span> <span class="token attr-name"><span class="token namespace">src:</span>raw</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://bit.ly/can-tom-n-jerry<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>video-player</span><span class="token punctuation">&gt;</span></span>
-</code></pre></div>
+<div class="code-toolbar"><pre class=" line-numbers language-html" data-line="1"><code class=" language-html"><strong><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>video-player</span> <span class="token attr-name"><span class="token namespace">src:</span>raw</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://bit.ly/can-tom-n-jerry<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>video-player</span><span class="token punctuation">&gt;</span></span>
+</strong></code></pre></div>
 <div line-highlight="1"></div>
 <h2 id="Makeplay_pausebuttonchangeasvideoisplayedandpaused">Make play / pause button change as video is played and paused</h2>
 <h3>The problem</h3>
@@ -237,19 +237,19 @@ When the video is paused, the button should say <em>“Play”</em>.</p>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span></code></pre></div>
 <h3>What you need to know</h3>
 <ul>
-<li><p>To change the HTML content of the page, use <a href="../../can-stache.helpers.if.html" title="can-stache.helpers.if">{{#if(expression)}}</a> and <a href="../../can-stache.helpers.else.html" title="">{{else}}</a> like:</p>
+<li><p>To change the HTML content of the page, use <a href="https://canjs.com/doc/can-stache.helpers.if.html" title="can-stache.helpers.if">{{#if(expression)}}</a> and <a href="https://canjs.com/doc/can-stache.helpers.else.html" title="">{{else}}</a> like:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span><span class="token punctuation">&gt;</span></span>{{#if(playing)}} Pause {{else}} Play {{/if}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span></code></pre></div></li>
-<li><p>The <a href="../../can-component.prototype.view.html" title="Provides a view to render directly within the component’s element. The view is rendered with the
-component’s can-component::ViewModel instance.  <content/> elements within the view are replaced by the source elements within the component’s tag.">view</a> responds to values in the <a href="../../can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
+<li><p>The <a href="https://canjs.com/doc/can-component.prototype.view.html" title="Provides a view to render directly within the component’s element. The view is rendered with the
+component’s can-component::ViewModel instance.  <content/> elements within the view are replaced by the source elements within the component’s tag.">view</a> responds to values in the <a href="https://canjs.com/doc/can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
 to the component’s view. The constructor function
-is initialized with values specified by the component element’s data bindings.">ViewModel</a>.  To create a <code>boolean</code> value in the <a href="../../can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
+is initialized with values specified by the component element’s data bindings.">ViewModel</a>.  To create a <code>boolean</code> value in the <a href="https://canjs.com/doc/can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
 to the component’s view. The constructor function
 is initialized with values specified by the component element’s data bindings.">ViewModel</a> do:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">ViewModel<span class="token punctuation">:</span> <span class="token punctuation">{</span>
   <span class="token comment">// ...</span>
   playing<span class="token punctuation">:</span> <span class="token string">"boolean"</span><span class="token punctuation">,</span>
 <span class="token punctuation">}</span></code></pre></div></li>
-<li><p>Methods can be used to change the <a href="../../can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
+<li><p>Methods can be used to change the <a href="https://canjs.com/doc/can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
 to the component’s view. The constructor function
 is initialized with values specified by the component element’s data bindings.">ViewModel</a>.  The following might create methods that change the <code>playing</code> value:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">ViewModel<span class="token punctuation">:</span> <span class="token punctuation">{</span>
@@ -261,7 +261,7 @@ is initialized with values specified by the component element’s data bindings.
     <span class="token keyword">this</span><span class="token punctuation">.</span>playing <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
 <span class="token punctuation">}</span></code></pre></div></li>
-<li><p>You can listen to events on the DOM with <a href="../../can-stache-bindings.event.html" title="Respond to events on elements or component ViewModels.">on:event</a>.  For example, the following might
+<li><p>You can listen to events on the DOM with <a href="https://canjs.com/doc/can-stache-bindings.event.html" title="Respond to events on elements or component ViewModels.">on:event</a>.  For example, the following might
 listen to a click on a <code>&lt;div&gt;</code> and call <code>doSomething()</code>:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name"><span class="token namespace">on:</span>click</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>doSomething()<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span></code></pre></div>
 <p><code>&lt;video&gt;</code> elements have a variety of useful <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement">events</a>, including <a href="https://developer.mozilla.org/en-US/docs/Web/Events/play">play</a> and
@@ -275,26 +275,26 @@ Component<span class="token punctuation">.</span><span class="token function">ex
   tag<span class="token punctuation">:</span> <span class="token string">"video-player"</span><span class="token punctuation">,</span>
   view<span class="token punctuation">:</span> <span class="token html-template-string">`
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>video</span> <span class="token attr-name">controls</span>
-      <span class="token attr-name"><span class="token namespace">on:</span>play</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>play()<span class="token punctuation">"</span></span>
-      <span class="token attr-name"><span class="token namespace">on:</span>pause</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>pause()<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+<strong>      <span class="token attr-name"><span class="token namespace">on:</span>play</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>play()<span class="token punctuation">"</span></span>
+      <span class="token attr-name"><span class="token namespace">on:</span>pause</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>pause()<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span></strong>
       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>source</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>{{src}}<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>video</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
+<strong>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span><span class="token punctuation">&gt;</span></span>
         {{#if(playing)}} Pause {{else}} Play {{/if}}
       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span></strong>
   `</span><span class="token punctuation">,</span>
   ViewModel<span class="token punctuation">:</span> <span class="token punctuation">{</span>
     src<span class="token punctuation">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
-    playing<span class="token punctuation">:</span> <span class="token string">"boolean"</span><span class="token punctuation">,</span>
+<strong>    playing<span class="token punctuation">:</span> <span class="token string">"boolean"</span><span class="token punctuation">,</span></strong>
 
-    <span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<strong>    <span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
       <span class="token keyword">this</span><span class="token punctuation">.</span>playing <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span><span class="token punctuation">,</span>
     <span class="token function">pause</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
       <span class="token keyword">this</span><span class="token punctuation">.</span>playing <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span></strong>
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre></div>
@@ -304,13 +304,13 @@ Component<span class="token punctuation">.</span><span class="token function">ex
 <p>When the <em>play/pause</em> <code>&lt;button&gt;</code> we created in the previous section is clicked, we want to
 either play or pause the video.</p>
 <h3>What you need to know</h3>
-<p>CanJS prefers to manage the state of your application in <a href="../../can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
+<p>CanJS prefers to manage the state of your application in <a href="https://canjs.com/doc/can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
 to the component’s view. The constructor function
 is initialized with values specified by the component element’s data bindings.">ViewModel</a>. The <code>&lt;video&gt;</code> player has state, such as
 if the video is <code>playing</code>.  When the <em>play/pause</em> button is clicked, we want to update the state
-of the <a href="../../can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
+of the <a href="https://canjs.com/doc/can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
 to the component’s view. The constructor function
-is initialized with values specified by the component element’s data bindings.">ViewModel</a> and have the <a href="../../can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
+is initialized with values specified by the component element’s data bindings.">ViewModel</a> and have the <a href="https://canjs.com/doc/can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
 to the component’s view. The constructor function
 is initialized with values specified by the component element’s data bindings.">ViewModel</a> update the state of the video player as a side effect.</p>
 <p>What this means is that instead of something like:</p>
@@ -339,7 +339,7 @@ is initialized with values specified by the component element’s data bindings.
 <li>Listen to when the <code>playing</code> state changes and update the state of the <code>&lt;video&gt;</code> element.</li>
 </ol>
 <p>You already know everything you need to know for step <strong>#1</strong>.  (Have the button call a <code>togglePlay</code> method with <code>on:click="togglePlay()"</code> and make the <code>togglePlay()</code> method toggle the state of the <code>playing</code> property.)</p>
-<p>For step <strong>#2</strong>, you need to use the <a href="../../can-component/connectedCallback.html" title="A lifecycle hook called after the component's element is inserted into the document.">connectedCallback</a> lifecycle hook. This
+<p>For step <strong>#2</strong>, you need to use the <a href="https://canjs.com/doc/can-component/connectedCallback.html" title="A lifecycle hook called after the component's element is inserted into the document.">connectedCallback</a> lifecycle hook. This
 hook gives you access to the component’s element and is a good place to do side-effects. Its use looks
 like this:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">ViewModel<span class="token punctuation">:</span> <span class="token punctuation">{</span>
@@ -349,7 +349,7 @@ like this:</p>
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre></div>
 <p><code>connectedCallback</code> gets called once the component’s <code>element</code> is in the page. You can use
-<a href="../../can-event-queue/map/map.listenTo.html" title="Listen to an event and register the binding for simplified unbinding.">listenTo</a> to listen to changes in the <a href="../../can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
+<a href="https://canjs.com/doc/can-event-queue/map/map.listenTo.html" title="Listen to an event and register the binding for simplified unbinding.">listenTo</a> to listen to changes in the <a href="https://canjs.com/doc/can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
 to the component’s view. The constructor function
 is initialized with values specified by the component element’s data bindings.">ViewModel</a>’s properties and
 perform side-effects. The following listens to when <code>playing</code> changes:</p>
@@ -377,7 +377,7 @@ Component<span class="token punctuation">.</span><span class="token function">ex
       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>source</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>{{src}}<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>video</span><span class="token punctuation">&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
-      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name"><span class="token namespace">on:</span>click</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>togglePlay()<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+<strong>      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name"><span class="token namespace">on:</span>click</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>togglePlay()<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span></strong>
         {{#if(playing)}} Pause {{else}} Play {{/if}}
       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
@@ -392,7 +392,7 @@ Component<span class="token punctuation">.</span><span class="token function">ex
     <span class="token function">pause</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
       <span class="token keyword">this</span><span class="token punctuation">.</span>playing <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span><span class="token punctuation">,</span>
-    <span class="token function">togglePlay</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<strong>    <span class="token function">togglePlay</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
       <span class="token keyword">this</span><span class="token punctuation">.</span>playing <span class="token operator">=</span> <span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>playing<span class="token punctuation">;</span>
     <span class="token punctuation">}</span><span class="token punctuation">,</span>
 
@@ -404,7 +404,7 @@ Component<span class="token punctuation">.</span><span class="token function">ex
           element<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">"video"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">pause</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token punctuation">}</span>
       <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span></strong>
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre></div>
@@ -418,7 +418,7 @@ formatted like: <code>mm:SS</code>. They should be presented within two spans li
 <span class="token operator">&lt;</span>span<span class="token operator">&gt;</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token number">45</span><span class="token operator">&lt;</span><span class="token operator">/</span>span<span class="token operator">&gt;</span></code></pre></div>
 <h3>What you need to know</h3>
 <ol>
-<li><p>Methods can be used to format values in <a href="../../can-stache.html" title="Live binding Mustache and Handlebars-compatible templates.">can-stache</a>. For example, you can uppercase values like  this:</p>
+<li><p>Methods can be used to format values in <a href="https://canjs.com/doc/can-stache.html" title="Live binding Mustache and Handlebars-compatible templates.">can-stache</a>. For example, you can uppercase values like  this:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">&gt;</span></span>{{upper(value)}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span></code></pre></div>
 <p>With a method like:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">ViewModel<span class="token punctuation">:</span> <span class="token punctuation">{</span>
@@ -440,7 +440,7 @@ formatted like: <code>mm:SS</code>. They should be presented within two spans li
     <span class="token keyword">return</span> minutes <span class="token operator">+</span> <span class="token string">":"</span> <span class="token operator">+</span> seconds<span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre></div></li>
 <li><p>Time is given as a number. Use the following to create a number property on
-the <a href="../../can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
+the <a href="https://canjs.com/doc/can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
 to the component’s view. The constructor function
 is initialized with values specified by the component element’s data bindings.">ViewModel</a>:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">ViewModel<span class="token punctuation">:</span> <span class="token punctuation">{</span>
@@ -455,7 +455,7 @@ changes.</p>
 <li><code>videoElement.duration</code> reads the duration of a video.</li>
 <li><code>videoElement.currentTime</code> reads the current play position of a video.</li>
 </ul></li>
-<li><p>You can get the element in an stache <code>on:event</code> binding with <a href="../../can-stache/keys/scope.html#scope_element" title="The template context">scope.element</a> like:</p>
+<li><p>You can get the element in an stache <code>on:event</code> binding with <a href="https://canjs.com/doc/can-stache/keys/scope.html#scope_element" title="The template context">scope.element</a> like:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>video</span> <span class="token attr-name"><span class="token namespace">on:</span>timeupdate</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>updateTimes(scope.element)<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span></code></pre></div></li>
 </ol>
 <h3>The solution</h3>
@@ -468,22 +468,22 @@ Component<span class="token punctuation">.</span><span class="token function">ex
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>video</span> <span class="token attr-name">controls</span>
       <span class="token attr-name"><span class="token namespace">on:</span>play</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>play()<span class="token punctuation">"</span></span>
       <span class="token attr-name"><span class="token namespace">on:</span>pause</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>pause()<span class="token punctuation">"</span></span>
-      <span class="token attr-name"><span class="token namespace">on:</span>timeupdate</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>updateTimes(scope.element)<span class="token punctuation">"</span></span>
-      <span class="token attr-name"><span class="token namespace">on:</span>loadedmetadata</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>updateTimes(scope.element)<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+<strong>      <span class="token attr-name"><span class="token namespace">on:</span>timeupdate</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>updateTimes(scope.element)<span class="token punctuation">"</span></span>
+      <span class="token attr-name"><span class="token namespace">on:</span>loadedmetadata</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>updateTimes(scope.element)<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span></strong>
       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>source</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>{{src}}<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>video</span><span class="token punctuation">&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name"><span class="token namespace">on:</span>click</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>togglePlay()<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
         {{#if(playing)}} Pause {{else}} Play {{/if}}
       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span>
-      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">&gt;</span></span>{{formatTime(currentTime)}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span> /
-      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">&gt;</span></span>{{formatTime(duration)}} <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span>
+<strong>      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">&gt;</span></span>{{formatTime(currentTime)}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span> /
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">&gt;</span></span>{{formatTime(duration)}} <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span></strong>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
   `</span><span class="token punctuation">,</span>
   ViewModel<span class="token punctuation">:</span> <span class="token punctuation">{</span>
     src<span class="token punctuation">:</span> <span class="token string">"string"</span><span class="token punctuation">,</span>
     playing<span class="token punctuation">:</span> <span class="token string">"boolean"</span><span class="token punctuation">,</span>
-    duration<span class="token punctuation">:</span> <span class="token string">"number"</span><span class="token punctuation">,</span>
+<strong>    duration<span class="token punctuation">:</span> <span class="token string">"number"</span><span class="token punctuation">,</span>
     currentTime<span class="token punctuation">:</span> <span class="token string">"number"</span><span class="token punctuation">,</span>
 
     <span class="token function">updateTimes</span><span class="token punctuation">(</span>videoElement<span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -500,7 +500,7 @@ Component<span class="token punctuation">.</span><span class="token function">ex
         seconds <span class="token operator">=</span> <span class="token string">"0"</span> <span class="token operator">+</span> seconds<span class="token punctuation">;</span>
       <span class="token punctuation">}</span>
       <span class="token keyword">return</span> minutes <span class="token operator">+</span> <span class="token string">":"</span> <span class="token operator">+</span> seconds<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span></strong>
     <span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
       <span class="token keyword">this</span><span class="token punctuation">.</span>playing <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span><span class="token punctuation">,</span>
@@ -540,7 +540,7 @@ the video playing position changes.</p>
 specified like:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>range<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>1<span class="token punctuation">"</span></span> <span class="token attr-name">step</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>any<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span></code></pre></div></li>
 <li><p>The range will have values from 0 to 1.  We will need to translate the currentTime to
-a number between 0 and 1. We can do this with a <a href="../../can-define.types.get.html" title="Specify what happens when a certain property is read on a map. get functions
+a number between 0 and 1. We can do this with a <a href="https://canjs.com/doc/can-define.types.get.html" title="Specify what happens when a certain property is read on a map. get functions
 work like a can-compute and automatically update themselves when a dependent
 observable value is changed.">computed getter property</a> like:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">ViewModel<span class="token punctuation">:</span> <span class="token punctuation">{</span>
@@ -549,7 +549,7 @@ observable value is changed.">computed getter property</a> like:</p>
     <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>currentTime <span class="token operator">/</span> <span class="token keyword">this</span><span class="token punctuation">.</span>duration<span class="token punctuation">;</span>
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
 <span class="token punctuation">}</span></code></pre></div></li>
-<li><p>Use <a href="../../can-stache-bindings.toChild.html" title="One-way bind a value in the parent scope to the ViewModel or element.">toChild:from</a> to update a value from a <a href="../../can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
+<li><p>Use <a href="https://canjs.com/doc/can-stache-bindings.toChild.html" title="One-way bind a value in the parent scope to the ViewModel or element.">toChild:from</a> to update a value from a <a href="https://canjs.com/doc/can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
 to the component’s view. The constructor function
 is initialized with values specified by the component element’s data bindings.">ViewModel</a> property like:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name"><span class="token namespace">value:</span>from</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>percentComplete<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span></code></pre></div></li>
@@ -572,8 +572,8 @@ Component<span class="token punctuation">.</span><span class="token function">ex
       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name"><span class="token namespace">on:</span>click</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>togglePlay()<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
         {{#if(playing)}} Pause {{else}} Play {{/if}}
       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span>
-      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>range<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>1<span class="token punctuation">"</span></span> <span class="token attr-name">step</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>any<span class="token punctuation">"</span></span>
-             <span class="token attr-name"><span class="token namespace">value:</span>from</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>percentComplete<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
+<strong>      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>range<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>1<span class="token punctuation">"</span></span> <span class="token attr-name">step</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>any<span class="token punctuation">"</span></span>
+             <span class="token attr-name"><span class="token namespace">value:</span>from</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>percentComplete<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span></strong>
       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">&gt;</span></span>{{formatTime(currentTime)}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span> /
       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">&gt;</span></span>{{formatTime(duration)}} <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
@@ -584,9 +584,9 @@ Component<span class="token punctuation">.</span><span class="token function">ex
     duration<span class="token punctuation">:</span> <span class="token string">"number"</span><span class="token punctuation">,</span>
     currentTime<span class="token punctuation">:</span> <span class="token string">"number"</span><span class="token punctuation">,</span>
 
-    <span class="token keyword">get</span> <span class="token function">percentComplete</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<strong>    <span class="token keyword">get</span> <span class="token function">percentComplete</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
       <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>currentTime <span class="token operator">/</span> <span class="token keyword">this</span><span class="token punctuation">.</span>duration<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span></strong>
 
     <span class="token function">updateTimes</span><span class="token punctuation">(</span>videoElement<span class="token punctuation">)</span> <span class="token punctuation">{</span>
       <span class="token keyword">this</span><span class="token punctuation">.</span>currentTime <span class="token operator">=</span> videoElement<span class="token punctuation">.</span>currentTime <span class="token operator">||</span> <span class="token number">0</span><span class="token punctuation">;</span>
@@ -638,7 +638,7 @@ Component<span class="token punctuation">.</span><span class="token function">ex
 <code>currentTime</code> property and then listen to when <code>currentTime</code> changes and update the  <code>&lt;video&gt;</code>
 element’s <code>currentTime</code> as a <em>side-effect</em>.</p>
 <p>This time, we need to translate the sliders values between 0 and 1 to <code>currentTime</code>
-values. We can do this by creating a <code>percentComplete</code> <a href="../../can-define.types.set.html" title="Specify what happens when a property value is set.">setter</a> that updates <code>currentTime</code> like:</p>
+values. We can do this by creating a <code>percentComplete</code> <a href="https://canjs.com/doc/can-define.types.set.html" title="Specify what happens when a property value is set.">setter</a> that updates <code>currentTime</code> like:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">ViewModel<span class="token punctuation">:</span> <span class="token punctuation">{</span>
   <span class="token comment">// ...</span>
   <span class="token keyword">get</span> <span class="token function">percentComplete</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -649,7 +649,7 @@ values. We can do this by creating a <code>percentComplete</code> <a href="../..
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
   <span class="token comment">// ...</span>
 <span class="token punctuation">}</span></code></pre></div>
-<p>Use <a href="../../can-stache-bindings.twoWay.html" title="Two-way bind a value in the viewModel or the element to the parent scope.">twoWay:bind</a> to two-way bind a value to a <a href="../../can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
+<p>Use <a href="https://canjs.com/doc/can-stache-bindings.twoWay.html" title="Two-way bind a value in the viewModel or the element to the parent scope.">twoWay:bind</a> to two-way bind a value to a <a href="https://canjs.com/doc/can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
 to the component’s view. The constructor function
 is initialized with values specified by the component element’s data bindings.">ViewModel</a> property:</p>
 <div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name"><span class="token namespace">value:</span>bind</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>someViewModelProperty<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span></code></pre></div>
@@ -660,7 +660,7 @@ is initialized with values specified by the component element’s data bindings.
 Component<span class="token punctuation">.</span><span class="token function">extend</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
   tag<span class="token punctuation">:</span> <span class="token string">"video-player"</span><span class="token punctuation">,</span>
   view<span class="token punctuation">:</span> <span class="token html-template-string">`
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>video</span>
+<strong>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>video</span></strong>
       <span class="token attr-name"><span class="token namespace">on:</span>play</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>play()<span class="token punctuation">"</span></span>
       <span class="token attr-name"><span class="token namespace">on:</span>pause</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>pause()<span class="token punctuation">"</span></span>
       <span class="token attr-name"><span class="token namespace">on:</span>timeupdate</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>updateTimes(scope.element)<span class="token punctuation">"</span></span>
@@ -672,7 +672,7 @@ Component<span class="token punctuation">.</span><span class="token function">ex
         {{#if(playing)}} Pause {{else}} Play {{/if}}
       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span>
       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>range<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>1<span class="token punctuation">"</span></span> <span class="token attr-name">step</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>any<span class="token punctuation">"</span></span>
-             <span class="token attr-name"><span class="token namespace">value:</span>bind</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>percentComplete<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span>
+<strong>             <span class="token attr-name"><span class="token namespace">value:</span>bind</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>percentComplete<span class="token punctuation">"</span></span><span class="token punctuation">/&gt;</span></span></strong>
       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">&gt;</span></span>{{formatTime(currentTime)}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span> /
       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">&gt;</span></span>{{formatTime(duration)}} <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
@@ -686,9 +686,9 @@ Component<span class="token punctuation">.</span><span class="token function">ex
     <span class="token keyword">get</span> <span class="token function">percentComplete</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
       <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>currentTime <span class="token operator">/</span> <span class="token keyword">this</span><span class="token punctuation">.</span>duration<span class="token punctuation">;</span>
     <span class="token punctuation">}</span><span class="token punctuation">,</span>
-    <span class="token keyword">set</span> <span class="token function">percentComplete</span><span class="token punctuation">(</span>newVal<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<strong>    <span class="token keyword">set</span> <span class="token function">percentComplete</span><span class="token punctuation">(</span>newVal<span class="token punctuation">)</span> <span class="token punctuation">{</span>
       <span class="token keyword">this</span><span class="token punctuation">.</span>currentTime <span class="token operator">=</span> newVal <span class="token operator">*</span> <span class="token keyword">this</span><span class="token punctuation">.</span>duration<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span></strong>
 
     <span class="token function">updateTimes</span><span class="token punctuation">(</span>videoElement<span class="token punctuation">)</span> <span class="token punctuation">{</span>
       <span class="token keyword">this</span><span class="token punctuation">.</span>currentTime <span class="token operator">=</span> videoElement<span class="token punctuation">.</span>currentTime <span class="token operator">||</span> <span class="token number">0</span><span class="token punctuation">;</span>
@@ -738,4 +738,3 @@ Component<span class="token punctuation">.</span><span class="token function">ex
 <p>When finished, you should see something like the following JS Bin:</p>
 <div class="cp_embed_wrapper"><iframe id="cp_embed_qyRqMx" src="//codepen.io/justinbmeyer/embed/qyRqMx?height=360&amp;theme-id=dark&amp;slug-hash=qyRqMx&amp;default-tab=js%2Cresult&amp;user=justinbmeyer&amp;embed-version=2&amp;pen-title=CanJS%205.0%20Video%20Player%20-%20Final" scrolling="no" frameborder="0" height="360" allowtransparency="true" allowfullscreen="true" allowpaymentrequest="true" name="CodePen Embed" title="CanJS 5.0 Video Player - Final" class="cp_embed_iframe " style="width: 100%; overflow: hidden;"></iframe></div>
 <script async="" src="https://static.codepen.io/assets/embed/ei.js"></script>
-
