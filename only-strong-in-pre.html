@@ -1,0 +1,642 @@
+<style>
+code strong {
+    background: linear-gradient(to right,rgba(0,180,0,.1) 100%,rgba(0,180,0,0));
+    width: 100%;
+    display: inline-block;
+    font-weight: normal;
+}
+</style>
+
+<h1>Create Custom Video Player Controls with CanJS</h1>
+
+    <p>In this guide, you will learn how to create a custom video player using the <code>&lt;video&gt;</code> element and <a href="http://canjs.com">CanJS</a>. The
+custom video player will:</p>
+<ul>
+<li>Have custom play and pause buttons.</li>
+<li>Show the current time and duration of the video.</li>
+<li>Have a <code>&lt;input type="range"&gt;</code> slider that can adjust the position of the video.</li>
+</ul>
+<p>The final player looks like:</p>
+<div class="cp_embed_wrapper"><iframe id="cp_embed_qyRqMx" src="//codepen.io/justinbmeyer/embed/qyRqMx?height=350&amp;theme-id=dark&amp;slug-hash=qyRqMx&amp;default-tab=js%2Cresult&amp;user=justinbmeyer&amp;embed-version=2&amp;pen-title=CanJS%205.0%20Video%20Player%20-%20Final" scrolling="no" frameborder="0" height="350" allowtransparency="true" allowfullscreen="true" allowpaymentrequest="true" name="CodePen Embed" title="CanJS 5.0 Video Player - Final" class="cp_embed_iframe " style="width: 100%; overflow: hidden;"></iframe></div>
+<p>The following sections are broken down into the following parts:</p>
+<ul>
+<li><strong>The problem</strong> — A description of what the section is trying to accomplish.</li>
+<li><strong>What you need to know</strong> — Browser or CanJS APIs that are useful for solving the problem.</li>
+<li><strong>The solution</strong> — The solution to the problem.</li>
+</ul>
+<h2 id="Setup">Setup</h2>
+<p><strong>START THIS TUTORIAL BY Forking THE FOLLOWING CodePen</strong>:</p>
+<blockquote>
+<p>Click the <code>Edit in CodePen</code> button.  The CodePen will open in a new window. Click the <code>Fork</code> button.</p>
+</blockquote>
+<div class="cp_embed_wrapper"><iframe id="cp_embed_LBxbam" src="//codepen.io/justinbmeyer/embed/LBxbam?height=320&amp;theme-id=dark&amp;slug-hash=LBxbam&amp;default-tab=js%2Cresult&amp;user=justinbmeyer&amp;embed-version=2&amp;pen-title=CanJS%205.0%20Video%20Player%20-%20Start" scrolling="no" frameborder="0" height="320" allowtransparency="true" allowfullscreen="true" allowpaymentrequest="true" name="CodePen Embed" title="CanJS 5.0 Video Player - Start" class="cp_embed_iframe " style="width: 100%; overflow: hidden;"></iframe></div>
+<p>This CodePen:</p>
+<ul>
+<li>Creates a <code>&lt;video&gt;</code> element that loads a video. <em>Right click and select “Show controls” to see the video’s controls</em>.</li>
+<li>Loads CanJS's custom element library: <a href="https://canjs.com/doc/can-component.html" title="Create a custom element that can be used to manage widgets or application logic.">Component</a>.</li>
+</ul>
+<h3>The problem</h3>
+<p>In this section, we will:</p>
+<ul>
+<li><p>Create a custom <code>&lt;video-player&gt;</code> element that takes a <code>src</code> attribute and creates a <code>&lt;video&gt;</code> element
+within itself. We should be able to create the video like:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html">&lt;video-player src:raw="http://bit.ly/can-tom-n-jerry"&gt;
+&lt;/video-player&gt;</code></pre></div></li>
+<li><p>The embedded <code>&lt;video&gt;</code> element should have the native controls enabled.</p></li>
+</ul>
+<p>When complete, the result will look exactly the same as the player when you started.  The
+only difference is that we will be using a custom <code>&lt;video-player&gt;</code> element in the <code>HTML</code>
+tab instead of the native <code>&lt;video&gt;</code> element.</p>
+<h3>What you need to know</h3>
+<p>To set up a basic CanJS application (or widget), you define a custom element in JavaScript and
+use the custom element in your page’s <code>HTML</code>.</p>
+<p>To define a custom element, extend <a href="https://canjs.com/doc/can-component.html" title="Create a custom element that can be used to manage widgets or application logic.">Component</a> with a <a href="https://canjs.com/doc/can-component.prototype.tag.html" title="Specifies the HTML tag (or node-name) the can-component will be created on.">tag</a>
+that matches the name of your custom element.  For example:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">Component.extend({
+  tag: "video-player"
+})</code></pre></div>
+<p>Then you can use this tag in your HTML page:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html">&lt;video-player&gt;&lt;/video-player&gt;</code></pre></div>
+<p>But this doesn’t do anything ... yet.  Components add their own HTML through their <a href="https://canjs.com/doc/can-component.prototype.view.html" title="Provides a view to render directly within the component’s element. The view is rendered with the
+component’s can-component::ViewModel instance.  <content/> elements within the view are replaced by the source elements within the component’s tag.">view</a>
+property:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">Component.extend({
+  tag: "video-player",
+  view: `&lt;h2&gt;I am a player!&lt;/h2&gt;`
+});</code></pre></div>
+<p>A component’s <a href="https://canjs.com/doc/can-component.prototype.view.html" title="Provides a view to render directly within the component’s element. The view is rendered with the
+component’s can-component::ViewModel instance.  <content/> elements within the view are replaced by the source elements within the component’s tag.">view</a> is rendered with its <a href="https://canjs.com/doc/can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
+to the component’s view. The constructor function
+is initialized with values specified by the component element’s data bindings.">ViewModel</a>. For example, we can make a <code>&lt;video&gt;</code> display <code>"http://bit.ly/can-tom-n-jerry"</code> by defining a <code>src</code> property on the <code>ViewModel</code> and using it in the <a href="https://canjs.com/doc/can-component.prototype.view.html" title="Provides a view to render directly within the component’s element. The view is rendered with the
+component’s can-component::ViewModel instance.  <content/> elements within the view are replaced by the source elements within the component’s tag.">view</a> like:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">Component.extend({
+  tag: "video-player",
+  view: `
+    &lt;video&gt;
+      &lt;source src="{{src}}"/&gt;
+    &lt;/video&gt;
+  `,
+  ViewModel: {
+    src: {type: "string", default: "http://bit.ly/can-tom-n-jerry"}
+  }
+});</code></pre></div>
+<p>But we want the <code>&lt;video-player&gt;</code> to take a <code>src</code> attribute value itself and use that for the
+<code>&lt;source&gt;</code>’s <code>src</code>. For example, if
+we wanted the video to play <code>"http://dl3.webmfiles.org/big-buck-bunny_trailer.webm"</code> instead of <code>"http://bit.ly/can-tom-n-jerry"</code>, we would:</p>
+<ol>
+<li>Update <code>&lt;video-player&gt;</code> to pass <code>"http://dl3.webmfiles.org/big-buck-bunny_trailer.webm"</code> with <a href="https://canjs.com/doc/can-stache-bindings.raw.html" title="One-way bind a string value to the ViewModel or element.">toChild:raw</a>:
+<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html">&lt;video-player src:raw="http://dl3.webmfiles.org/big-buck-bunny_trailer.webm"/&gt;</code></pre></div></li>
+<li>Update the <a href="https://canjs.com/doc/can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
+to the component’s view. The constructor function
+is initialized with values specified by the component element’s data bindings.">ViewModel</a> to define a <code>src</code> property like:
+<div class="code-toolbar"><pre class=" line-numbers language-js" data-line="5"><code class=" language-js">Component.extend({
+  tag: "video-player",
+  view: `
+    &lt;video&gt;
+<strong>      &lt;source src="{{src}}"/&gt;</strong>
+    &lt;/video&gt;
+  `,
+  ViewModel: {
+    src: "string"
+  }
+});</code></pre></div>
+<div line-highlight="5"></div></li>
+</ol>
+<p>Finally, to have a <code>&lt;video&gt;</code> element show the <em>native</em> controls, add a <code>controls</code>
+attribute like:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html">&lt;video controls&gt;</code></pre></div>
+<h3>The solution</h3>
+<p>Update the <strong>JS</strong> tab to:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-js" data-line="3-13"><code class=" language-js">import {Component} from "//unpkg.com/can@5/core.mjs";
+
+<strong>Component.extend({
+  tag: "video-player",
+  view: `
+    &lt;video controls&gt;
+      &lt;source src="{{src}}"/&gt;
+    &lt;/video&gt;
+  `,
+  ViewModel: {
+    src: "string",
+  }
+});</strong>
+</code></pre></div>
+<div line-highlight="3-13"></div>
+<p>Update the <strong>HTML</strong> to:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-html" data-line="1"><code class=" language-html"><strong>&lt;video-player src:raw="http://bit.ly/can-tom-n-jerry"&gt;&lt;/video-player&gt;
+</strong></code></pre></div>
+<div line-highlight="1"></div>
+<h2 id="Makeplay_pausebuttonchangeasvideoisplayedandpaused">Make play / pause button change as video is played and paused</h2>
+<h3>The problem</h3>
+<p>When the video is played or paused using the native controls, we want to change the content of a <code>&lt;button&gt;</code>
+to say <em>“Play”</em> or <em>“Pause”</em>.</p>
+<p>When the video is played, the button should say <em>“Pause”</em>.
+When the video is paused, the button should say <em>“Play”</em>.</p>
+<p>We want the button to be within a <code>&lt;div&gt;</code> after the video element like:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html">&lt;/video&gt;
+&lt;div&gt;
+  &lt;button&gt;Play&lt;/button&gt;
+&lt;/div&gt;</code></pre></div>
+<h3>What you need to know</h3>
+<ul>
+<li><p>To change the HTML content of the page, use <a href="https://canjs.com/doc/can-stache.helpers.if.html" title="can-stache.helpers.if">{{#if(expression)}}</a> and <a href="https://canjs.com/doc/can-stache.helpers.else.html" title="">{{else}}</a> like:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html">&lt;button&gt;{{#if(playing)}} Pause {{else}} Play {{/if}}&lt;/button&gt;</code></pre></div></li>
+<li><p>The <a href="https://canjs.com/doc/can-component.prototype.view.html" title="Provides a view to render directly within the component’s element. The view is rendered with the
+component’s can-component::ViewModel instance.  <content/> elements within the view are replaced by the source elements within the component’s tag.">view</a> responds to values in the <a href="https://canjs.com/doc/can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
+to the component’s view. The constructor function
+is initialized with values specified by the component element’s data bindings.">ViewModel</a>.  To create a <code>boolean</code> value in the <a href="https://canjs.com/doc/can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
+to the component’s view. The constructor function
+is initialized with values specified by the component element’s data bindings.">ViewModel</a> do:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">ViewModel: {
+  // ...
+  playing: "boolean",
+}</code></pre></div></li>
+<li><p>Methods can be used to change the <a href="https://canjs.com/doc/can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
+to the component’s view. The constructor function
+is initialized with values specified by the component element’s data bindings.">ViewModel</a>.  The following might create methods that change the <code>playing</code> value:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">ViewModel: {
+  // ...
+  play() {
+    this.playing = true;
+  },
+  pause() {
+    this.playing = false;
+  },
+}</code></pre></div></li>
+<li><p>You can listen to events on the DOM with <a href="https://canjs.com/doc/can-stache-bindings.event.html" title="Respond to events on elements or component ViewModels.">on:event</a>.  For example, the following might
+listen to a click on a <code>&lt;div&gt;</code> and call <code>doSomething()</code>:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html">&lt;div on:click="doSomething()"&gt;</code></pre></div>
+<p><code>&lt;video&gt;</code> elements have a variety of useful <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement">events</a>, including <a href="https://developer.mozilla.org/en-US/docs/Web/Events/play">play</a> and
+<a href="https://developer.mozilla.org/en-US/docs/Web/Events/pause">pause</a> events that are emitted when the video is played or paused.</p></li>
+</ul>
+<h3>The solution</h3>
+<p>Update the <strong>JavaScript</strong> tab to:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-js" data-line="7-8,11-15,19,21-25"><code class=" language-js">import {Component} from "//unpkg.com/can@5/core.mjs";
+
+Component.extend({
+  tag: "video-player",
+  view: `
+    &lt;video controls
+<strong>      on:play="play()"
+      on:pause="pause()"&gt;</strong>
+      &lt;source src="{{src}}"/&gt;
+    &lt;/video&gt;
+<strong>    &lt;div&gt;
+      &lt;button&gt;
+        {{#if(playing)}} Pause {{else}} Play {{/if}}
+      &lt;/button&gt;
+    &lt;/div&gt;</strong>
+  `,
+  ViewModel: {
+    src: "string",
+<strong>    playing: "boolean",</strong>
+
+<strong>    play() {
+      this.playing = true;
+    },
+    pause() {
+      this.playing = false;
+    },</strong>
+  }
+});
+</code></pre></div>
+<div line-highlight="7-8,11-15,19,21-25"></div>
+<h2 id="Makeclickingtheplay_pausebuttonplayorpausethevideo">Make clicking the play/pause button play or pause the video</h2>
+<h3>The problem</h3>
+<p>When the <em>play/pause</em> <code>&lt;button&gt;</code> we created in the previous section is clicked, we want to
+either play or pause the video.</p>
+<h3>What you need to know</h3>
+<p>CanJS prefers to manage the state of your application in <a href="https://canjs.com/doc/can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
+to the component’s view. The constructor function
+is initialized with values specified by the component element’s data bindings.">ViewModel</a>. The <code>&lt;video&gt;</code> player has state, such as
+if the video is <code>playing</code>.  When the <em>play/pause</em> button is clicked, we want to update the state
+of the <a href="https://canjs.com/doc/can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
+to the component’s view. The constructor function
+is initialized with values specified by the component element’s data bindings.">ViewModel</a> and have the <a href="https://canjs.com/doc/can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
+to the component’s view. The constructor function
+is initialized with values specified by the component element’s data bindings.">ViewModel</a> update the state of the video player as a side effect.</p>
+<p>What this means is that instead of something like:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">togglePlay() {
+  if ( videoElement.paused ) {
+    videoElement.play()
+  } else {
+    videoElement.pause()
+  }
+}</code></pre></div>
+<p>We update the state like:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">togglePlay() {
+  this.playing = !this.playing;
+}</code></pre></div>
+<p>And listen to when <code>playing</code> changes and update the <code>video</code> element like:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">viewModel.listenTo("playing", function(event, isPlaying) {
+  if ( isPlaying ) {
+    videoElement.play()
+  } else {
+    videoElement.pause()
+  }
+})</code></pre></div>
+<p>This means that you need to:</p>
+<ol>
+<li>Listen to when the <code>&lt;button&gt;</code> is clicked and call a ViewModel method that updates the <code>playing</code> state.</li>
+<li>Listen to when the <code>playing</code> state changes and update the state of the <code>&lt;video&gt;</code> element.</li>
+</ol>
+<p>You already know everything you need to know for step <strong>#1</strong>.  (Have the button call a <code>togglePlay</code> method with <code>on:click="togglePlay()"</code> and make the <code>togglePlay()</code> method toggle the state of the <code>playing</code> property.)</p>
+<p>For step <strong>#2</strong>, you need to use the <a href="https://canjs.com/doc/can-component/connectedCallback.html" title="A lifecycle hook called after the component's element is inserted into the document.">connectedCallback</a> lifecycle hook. This
+hook gives you access to the component’s element and is a good place to do side-effects. Its use looks
+like this:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">ViewModel: {
+  // ...
+  connectedCallback(element) {
+    // perform mischief
+  }
+}</code></pre></div>
+<p><code>connectedCallback</code> gets called once the component’s <code>element</code> is in the page. You can use
+<a href="https://canjs.com/doc/can-event-queue/map/map.listenTo.html" title="Listen to an event and register the binding for simplified unbinding.">listenTo</a> to listen to changes in the <a href="https://canjs.com/doc/can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
+to the component’s view. The constructor function
+is initialized with values specified by the component element’s data bindings.">ViewModel</a>’s properties and
+perform side-effects. The following listens to when <code>playing</code> changes:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">ViewModel: {
+  // ...
+  connectedCallback(element) {
+    this.listenTo("playing", function(event, isPlaying) {
+
+    })
+  }
+}</code></pre></div>
+<p>Use <code>querySelector</code> to get the <code>&lt;video&gt;</code> element from the <code>&lt;video-player&gt;</code> like:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">element.querySelector("video")</code></pre></div>
+<p><code>&lt;video&gt;</code> elements have a <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play">.play()</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/pause">.pause()</a> methods that can start and stop a video.</p>
+<h3>The solution</h3>
+<p>Update the <strong>JavaScript</strong> tab to:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-js" data-line="12,27-30,31-39"><code class=" language-js">import {Component} from "//unpkg.com/can@5/core.mjs";
+
+Component.extend({
+  tag: "video-player",
+  view: `
+    &lt;video controls
+      on:play="play()"
+      on:pause="pause()"&gt;
+      &lt;source src="{{src}}"/&gt;
+    &lt;/video&gt;
+    &lt;div&gt;
+<strong>      &lt;button on:click="togglePlay()"&gt;</strong>
+        {{#if(playing)}} Pause {{else}} Play {{/if}}
+      &lt;/button&gt;
+    &lt;/div&gt;
+  `,
+  ViewModel: {
+    src: "string",
+    playing: "boolean",
+
+    play() {
+      this.playing = true;
+    },
+    pause() {
+      this.playing = false;
+    },
+<strong>    togglePlay() {
+      this.playing = !this.playing;
+    },
+
+    connectedCallback(element) {
+      this.listenTo("playing", function(event, isPlaying) {
+        if (isPlaying) {
+          element.querySelector("video").play();
+        } else {
+          element.querySelector("video").pause();
+        }
+      });
+    }</strong>
+  }
+});
+</code></pre></div>
+<div line-highlight="12,27-30,31-39"></div>
+<h2 id="Showcurrenttimeandduration">Show current time and duration</h2>
+<h3>The problem</h3>
+<p>Show the current time and duration of the video element.  The time and duration should be
+formatted like: <code>mm:SS</code>. They should be presented within two spans like:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">&lt;/button&gt;
+&lt;span&gt;1:22&lt;/span&gt;
+&lt;span&gt;2:45&lt;/span&gt;</code></pre></div>
+<h3>What you need to know</h3>
+<ol>
+<li><p>Methods can be used to format values in <a href="https://canjs.com/doc/can-stache.html" title="Live binding Mustache and Handlebars-compatible templates.">can-stache</a>. For example, you can uppercase values like  this:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html">&lt;span&gt;{{upper(value)}}&lt;/span&gt;</code></pre></div>
+<p>With a method like:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">ViewModel: {
+  // ...
+  upper(value) {
+    return value.toString().toUpperCase();
+  }
+}</code></pre></div>
+<p>The following can be used to format time:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">formatTime(time) {
+    if (time === null || time === undefined) {
+      return "--";
+    }
+    const minutes = Math.floor(time / 60);
+    let seconds = Math.floor(time - minutes * 60);
+    if (seconds &lt; 10) {
+      seconds = "0" + seconds;
+    }
+    return minutes + ":" + seconds;
+}</code></pre></div></li>
+<li><p>Time is given as a number. Use the following to create a number property on
+the <a href="https://canjs.com/doc/can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
+to the component’s view. The constructor function
+is initialized with values specified by the component element’s data bindings.">ViewModel</a>:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">ViewModel: {
+  // ...
+  duration: "number",
+  currentTime: "number"
+}</code></pre></div></li>
+<li><p><code>&lt;video&gt;</code> elements emit a <a href="https://developer.mozilla.org/en-US/docs/Web/Events/loadedmetadata">loadmetadata event</a> when they know how long
+the video is. They also emit a <a href="https://developer.mozilla.org/en-US/docs/Web/Events/timeupdate">timeupdate event</a> when the video’s current play position
+changes.</p>
+<ul>
+<li><code>videoElement.duration</code> reads the duration of a video.</li>
+<li><code>videoElement.currentTime</code> reads the current play position of a video.</li>
+</ul></li>
+<li><p>You can get the element in an stache <code>on:event</code> binding with <a href="https://canjs.com/doc/can-stache/keys/scope.html#scope_element" title="The template context">scope.element</a> like:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html">&lt;video on:timeupdate="updateTimes(scope.element)"/&gt;</code></pre></div></li>
+</ol>
+<h3>The solution</h3>
+<p>Update the <strong>JavaScript</strong> tab to:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-js" data-line="9,10,17,18,24-41"><code class=" language-js">import {Component} from "//unpkg.com/can@5/core.mjs";
+
+Component.extend({
+  tag: "video-player",
+  view: `
+    &lt;video controls
+      on:play="play()"
+      on:pause="pause()"
+<strong>      on:timeupdate="updateTimes(scope.element)"
+      on:loadedmetadata="updateTimes(scope.element)"&gt;</strong>
+      &lt;source src="{{src}}"/&gt;
+    &lt;/video&gt;
+    &lt;div&gt;
+      &lt;button on:click="togglePlay()"&gt;
+        {{#if(playing)}} Pause {{else}} Play {{/if}}
+      &lt;/button&gt;
+<strong>      &lt;span&gt;{{formatTime(currentTime)}}&lt;/span&gt; /
+      &lt;span&gt;{{formatTime(duration)}} &lt;/span&gt;</strong>
+    &lt;/div&gt;
+  `,
+  ViewModel: {
+    src: "string",
+    playing: "boolean",
+<strong>    duration: "number",
+    currentTime: "number",
+
+    updateTimes(videoElement) {
+      this.currentTime = videoElement.currentTime || 0;
+      this.duration = videoElement.duration;
+    },
+    formatTime(time) {
+      if (time === null || time === undefined) {
+        return "--";
+      }
+      const minutes = Math.floor(time / 60);
+      let seconds = Math.floor(time - minutes * 60);
+      if (seconds &lt; 10) {
+        seconds = "0" + seconds;
+      }
+      return minutes + ":" + seconds;
+    },</strong>
+    play() {
+      this.playing = true;
+    },
+    pause() {
+      this.playing = false;
+    },
+    togglePlay() {
+      this.playing = !this.playing;
+    },
+
+    connectedCallback(element) {
+      this.listenTo("playing", function(event, isPlaying) {
+        if (isPlaying) {
+          element.querySelector("video").play();
+        } else {
+          element.querySelector("video").pause();
+        }
+      });
+    }
+  }
+});
+</code></pre></div>
+<div line-highlight="9,10,17,18,24-41"></div>
+<h2 id="Makerangeshowpositionslideratcurrenttime">Make range show position slider at current time</h2>
+<h3>The problem</h3>
+<p>Create a <code>&lt;input type="range"/&gt;</code> element that changes its position as
+the video playing position changes.</p>
+<p>The <code>&lt;input type="range"/&gt;</code> element should be after the <code>&lt;button&gt;</code> and before the
+<code>currentTime</code> span like:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-html" data-line="2"><code class=" language-html">&lt;/button&gt;
+&lt;input type="range"/&gt;
+&lt;span&gt;{{formatTime(currentTime)}}&lt;/span&gt; /</code></pre></div>
+<div line-highlight="2"></div>
+<h3>What you need to know</h3>
+<ul>
+<li><p>The range input can have an initial value, max value, and step size
+specified like:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html">&lt;input type="range" value="0" max="1" step="any"/&gt;</code></pre></div></li>
+<li><p>The range will have values from 0 to 1.  We will need to translate the currentTime to
+a number between 0 and 1. We can do this with a <a href="https://canjs.com/doc/can-define.types.get.html" title="Specify what happens when a certain property is read on a map. get functions
+work like a can-compute and automatically update themselves when a dependent
+observable value is changed.">computed getter property</a> like:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">ViewModel: {
+  // ...
+  get percentComplete() {
+    return this.currentTime / this.duration;
+  },
+}</code></pre></div></li>
+<li><p>Use <a href="https://canjs.com/doc/can-stache-bindings.toChild.html" title="One-way bind a value in the parent scope to the ViewModel or element.">key:from</a> to update a value from a <a href="https://canjs.com/doc/can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
+to the component’s view. The constructor function
+is initialized with values specified by the component element’s data bindings.">ViewModel</a> property like:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html">&lt;input value:from="percentComplete"/&gt;</code></pre></div></li>
+</ul>
+<h3>The solution</h3>
+<p>Update the <strong>JavaScript</strong> tab to:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-js" data-line="17-18,29-31"><code class=" language-js">import {Component} from "//unpkg.com/can@5/core.mjs";
+
+Component.extend({
+  tag: "video-player",
+  view: `
+    &lt;video controls
+      on:play="play()"
+      on:pause="pause()"
+      on:timeupdate="updateTimes(scope.element)"
+      on:loadedmetadata="updateTimes(scope.element)"&gt;
+      &lt;source src="{{src}}"/&gt;
+    &lt;/video&gt;
+    &lt;div&gt;
+      &lt;button on:click="togglePlay()"&gt;
+        {{#if(playing)}} Pause {{else}} Play {{/if}}
+      &lt;/button&gt;
+<strong>      &lt;input type="range" value="0" max="1" step="any"
+             value:from="percentComplete"/&gt;</strong>
+      &lt;span&gt;{{formatTime(currentTime)}}&lt;/span&gt; /
+      &lt;span&gt;{{formatTime(duration)}} &lt;/span&gt;
+    &lt;/div&gt;
+  `,
+  ViewModel: {
+    src: "string",
+    playing: "boolean",
+    duration: "number",
+    currentTime: "number",
+
+<strong>    get percentComplete() {
+      return this.currentTime / this.duration;
+    },</strong>
+
+    updateTimes(videoElement) {
+      this.currentTime = videoElement.currentTime || 0;
+      this.duration = videoElement.duration;
+    },
+    formatTime(time) {
+      if (time === null || time === undefined) {
+        return "--";
+      }
+      const minutes = Math.floor(time / 60);
+      let seconds = Math.floor(time - minutes * 60);
+      if (seconds &lt; 10) {
+        seconds = "0" + seconds;
+      }
+      return minutes + ":" + seconds;
+    },
+    play() {
+      this.playing = true;
+    },
+    pause() {
+      this.playing = false;
+    },
+    togglePlay() {
+      this.playing = !this.playing;
+    },
+
+    connectedCallback(element) {
+      this.listenTo("playing", function(event, isPlaying) {
+        if (isPlaying) {
+          element.querySelector("video").play();
+        } else {
+          element.querySelector("video").pause();
+        }
+      });
+    }
+  }
+});
+</code></pre></div>
+<div line-highlight="17-18,29-31"></div>
+<h2 id="Makeslidingtherangeupdatethecurrenttime">Make sliding the range update the current time</h2>
+<h3>The problem</h3>
+<p>In this section we will:</p>
+<ul>
+<li>Remove the native controls from the video player.  We don’t need them anymore!</li>
+<li>Make it so when a user moves the range slider, the video position updates.</li>
+</ul>
+<h3>What you need to know</h3>
+<p>Similar to when we <a href="#Makeclickingtheplay_pausebuttonplayorpausethevideo">made the play/pause button play or pause the video</a>, we will want to update the
+<code>currentTime</code> property and then listen to when <code>currentTime</code> changes and update the  <code>&lt;video&gt;</code>
+element’s <code>currentTime</code> as a <em>side-effect</em>.</p>
+<p>This time, we need to translate the sliders values between 0 and 1 to <code>currentTime</code>
+values. We can do this by creating a <code>percentComplete</code> <a href="https://canjs.com/doc/can-define.types.set.html" title="Specify what happens when a property value is set.">setter</a> that updates <code>currentTime</code> like:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-js"><code class=" language-js">ViewModel: {
+  // ...
+  get percentComplete() {
+    return this.currentTime / this.duration;
+  },
+  set percentComplete(newVal) {
+    this.currentTime = newVal * this.duration;
+  },
+  // ...
+}</code></pre></div>
+<p>Use <a href="https://canjs.com/doc/can-stache-bindings.twoWay.html" title="Two-way bind a value in the viewModel or the element to the parent scope.">key:bind</a> to two-way bind a value to a <a href="https://canjs.com/doc/can-component.prototype.ViewModel.html" title="Provides or describes a constructor function that provides values and methods
+to the component’s view. The constructor function
+is initialized with values specified by the component element’s data bindings.">ViewModel</a> property:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-html"><code class=" language-html">&lt;input value:bind="someViewModelProperty"/&gt;</code></pre></div>
+<h3>The solution</h3>
+<p>Update the <strong>JavaScript</strong> tab to:</p>
+<div class="code-toolbar"><pre class=" line-numbers language-js" data-line="6,18,32-34,69-74"><code class=" language-js">import {Component} from "//unpkg.com/can@5/core.mjs";
+
+Component.extend({
+  tag: "video-player",
+  view: `
+<strong>    &lt;video</strong>
+      on:play="play()"
+      on:pause="pause()"
+      on:timeupdate="updateTimes(scope.element)"
+      on:loadedmetadata="updateTimes(scope.element)"&gt;
+      &lt;source src="{{src}}"/&gt;
+    &lt;/video&gt;
+    &lt;div&gt;
+      &lt;button on:click="togglePlay()"&gt;
+        {{#if(playing)}} Pause {{else}} Play {{/if}}
+      &lt;/button&gt;
+      &lt;input type="range" value="0" max="1" step="any"
+<strong>             value:bind="percentComplete"/&gt;</strong>
+      &lt;span&gt;{{formatTime(currentTime)}}&lt;/span&gt; /
+      &lt;span&gt;{{formatTime(duration)}} &lt;/span&gt;
+    &lt;/div&gt;
+  `,
+  ViewModel: {
+    src: "string",
+    playing: "boolean",
+    duration: "number",
+    currentTime: "number",
+
+    get percentComplete() {
+      return this.currentTime / this.duration;
+    },
+<strong>    set percentComplete(newVal) {
+      this.currentTime = newVal * this.duration;
+    },</strong>
+
+    updateTimes(videoElement) {
+      this.currentTime = videoElement.currentTime || 0;
+      this.duration = videoElement.duration;
+    },
+    formatTime(time) {
+      if (time === null || time === undefined) {
+        return "--";
+      }
+      const minutes = Math.floor(time / 60);
+      let seconds = Math.floor(time - minutes * 60);
+      if (seconds &lt; 10) {
+        seconds = "0" + seconds;
+      }
+      return minutes + ":" + seconds;
+    },
+    play() {
+      this.playing = true;
+    },
+    pause() {
+      this.playing = false;
+    },
+    togglePlay() {
+      this.playing = !this.playing;
+    },
+
+    connectedCallback(element) {
+      this.listenTo("playing", function(event, isPlaying) {
+        if (isPlaying) {
+          element.querySelector("video").play();
+        } else {
+          element.querySelector("video").pause();
+        }
+      });
+      this.listenTo("currentTime", function(event, currentTime) {
+        const videoElement = element.querySelector("video");
+        if (currentTime !== videoElement.currentTime) {
+          videoElement.currentTime = currentTime;
+        }
+      });
+    }
+  }
+});
+</code></pre></div>
+<div line-highlight="6,18,32-34,69-74"></div>
+<h2 id="Result">Result</h2>
+<p>When finished, you should see something like the following JS Bin:</p>
+<div class="cp_embed_wrapper"><iframe id="cp_embed_qyRqMx" src="//codepen.io/justinbmeyer/embed/qyRqMx?height=360&amp;theme-id=dark&amp;slug-hash=qyRqMx&amp;default-tab=js%2Cresult&amp;user=justinbmeyer&amp;embed-version=2&amp;pen-title=CanJS%205.0%20Video%20Player%20-%20Final" scrolling="no" frameborder="0" height="360" allowtransparency="true" allowfullscreen="true" allowpaymentrequest="true" name="CodePen Embed" title="CanJS 5.0 Video Player - Final" class="cp_embed_iframe " style="width: 100%; overflow: hidden;"></iframe></div>
+<script async="" src="https://static.codepen.io/assets/embed/ei.js"></script>
